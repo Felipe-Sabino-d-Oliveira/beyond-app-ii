@@ -238,7 +238,7 @@
 import { mdiPencil, mdiDelete } from "@mdi/js";
 
 export default {
-  name: "Cursos",
+  name: "PageCursos",
   data: () => ({
     cursos: [],
     novoCurso: {
@@ -311,7 +311,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  filter: grayscale(100%);
 }
 
 .botao__adicionar__curso {

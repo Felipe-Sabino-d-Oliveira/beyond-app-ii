@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Login from "../pages/Login.vue";
-import Home from "../pages/Home.vue";
-import Cursos from "../pages/Cursos.vue";
+import Login from "../pages/PageLogin.vue";
+import Cadastro from "../pages/PageCadastro.vue";
+import Home from "../pages/PageHome.vue";
+import Cursos from "../pages/PageCursos.vue";
 // import MaisServicos from '../pages/MaisServicos.vue'
 // import Blog from '../pages/Blog.vue'
 // import SobreNos from '../pages/SobreNos.vue'
@@ -15,6 +16,11 @@ const routes = [
     path: "/",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/cadastro",
+    name: "cadastro",
+    component: Cadastro,
   },
   {
     path: "/01101000011011110110111001100101",

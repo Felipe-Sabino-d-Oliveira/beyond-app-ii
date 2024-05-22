@@ -48,7 +48,12 @@
   </v-main>
 </template>
 
-<script></script>
+<script>
+
+export default{
+  name: "PageHome",
+}
+</script>
 
 <style>
 .container {
@@ -58,7 +63,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  filter: grayscale(100%);
 }
 
 .conteudo__principal {

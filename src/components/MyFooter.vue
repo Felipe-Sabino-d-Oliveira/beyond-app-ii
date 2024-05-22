@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "Footer",
+  name: "MyFooter",
   data: () => ({
     links: ["Início", "Cursos", "Mais Serviços", "Blog", "Sobre Nós"],
   }),
