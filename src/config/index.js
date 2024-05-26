@@ -18,3 +18,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export { app };
+
+// ====================== FIRESTORE =======================
+import { getFirestore } from "firebase/firestore";
+
+export const db = getFirestore(app);

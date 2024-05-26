@@ -1,85 +1,88 @@
 <template>
-  <v-container>
-    <v-card
-      class="cartao_login d-flex  align-center justify-center"
-      elevation="5"
-      rounded="lg"
-      width="calc(50% + 75px)"
-      height="calc(25% + 75px)"
-      
-    >
-      <v-form class=" d-flex flex-column align-center justify-center">
-        <h1>LOGIN</h1>
-        <v-text-field
-          v-model="email"
-          :error-messages="emailErrors"
-          label="E-mail"
-          required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
-        >
-        </v-text-field>
-        <v-text-field
-          v-model="password"
-          :error-messages="passwordErrors"
-          label="Senha"
-          type="password"
-          required
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        >
-        </v-text-field>
-          <v-btn class="mr-4" v-on:click="login()"> Entrar </v-btn>
-          <router-link to="cadastro">Não tem uma conta?</router-link>
+    <v-container class="d-flex justify-center align-center">
+        <v-card dark class="card__login d-flex flex-column justify-center align-center" width="500" height="550">
+            <h1>LOGIN</h1>
+            <v-form class="formulario__login">
+                <v-text-field v-model="email" :error-messages="emailErrors" label="E-mail" required
+                    @input="$v.email.$touch()" @blur="$v.email.$touch()">
+                </v-text-field>
+                <v-text-field v-model="password" :error-messages="passwordErrors" label="Senha" type="password" required
+                    @input="$v.password.$touch()" @blur="$v.password.$touch()">
+                </v-text-field>
 
-      </v-form>
-    </v-card>
-  </v-container>
+            </v-form>
+            <v-card-actions>
+                <v-btn light class="mr-4" v-on:click="login()">
+                    <v-icon>
+                        {{ icons.mdiLogin }}
+                    </v-icon>
+                </v-btn>
+                <p style="margin: 0; color: var(--color-white);">Não tem uma conta? <router-link style="color: var(--color-white);" to="cadastro">Cadastre-se</router-link></p>
+            </v-card-actions>
+        </v-card>
+    </v-container>
 </template>
-
+  
 <script>
-import { required, email } from "vuelidate/lib/validators";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { mdiLogin } from '@mdi/js';
+import { required, email } from 'vuelidate/lib/validators'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 export default {
-  name: "Login",
-  data: () => ({
-    email: "",
-    password: "",
-    emailErrors: [],
-    passwordErrors: [],
-  }),
-  validations: {
-    email: { required, email },
-    password: { required },
-  },
-  methods: {
-    async login() {
-      try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, this.email, this.password);
-        alert("Login realizado!");
-        this.mail = "";
-        this.password = "";
-        // Redirecionar para a página de início
-        this.$router.push("/home");
-      } catch (error) {
-        alert("Erro ao realizar login:", error.message);
-        console.error("Erro ao realizar login:", error.message);
-      }
+    name: 'PageLogin',
+    data: () => ({
+        email: '',
+        password: '',
+        emailErrors: [],
+        passwordErrors: [],
+        icons:{
+            mdiLogin,
+        }
+    }),
+    validations: {
+        email: { required, email },
+        password: { required },
     },
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters["auth/isLoggedIn"];
+    methods: {
+        async login() {
+            try {
+                const auth = getAuth();
+                await signInWithEmailAndPassword(auth, this.email, this.password);
+                alert('Login realizado!');
+                this.mail = '';
+                this.password = '';
+                // Redirecionar para a página de início
+                this.$router.push('/home');
+            } catch (error) {
+                alert('Erro ao realizar login:', error.message);
+                console.error('Erro ao realizar login:', error.message);
+            }
+
+        },
     },
-  },
-};
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters['auth/isLoggedIn'];
+        }
+    },
+}
 </script>
 
-<style>
 
-.cartao_login{
-  background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
+<style scoped>
+/* classes comuns */
+
+.container {
+    max-width: 100%;
+    height: 100% !important;
+    background: var(--gradient-blue-3);
+}
+
+.card__login {
+    background: var(--gradient-blue-4);
+}
+
+.formulario__login {
+    width: 60%;
 }
 </style>

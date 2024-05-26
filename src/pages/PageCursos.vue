@@ -236,6 +236,7 @@
 
 <script>
 import { mdiPencil, mdiDelete } from "@mdi/js";
+import { db } from "../config/index";
 
 export default {
   name: "PageCursos",
@@ -281,20 +282,59 @@ export default {
       this.indexAtualizarCurso = index;
     },
 
-    adicionarCurso() {
+    /* adicionarCurso() {
       this.cursos.push(this.novoCurso);
       this.dialogAdicionarCurso = false;
+    }, */
+    adicionarCurso() {
+      db.collection("cursos")
+        .add(this.novoCurso)
+        .then((docRef) => {
+          console.log("Curso adicionado com sucesso!", docRef.id);
+          this.cursos.push({ ...this.novoCurso, id: docRef.id });
+          this.dialogAdicionarCurso = false;
+        })
+        .catch((error) => {
+          console.error("Erro ao adicionar curso:", error);
+        });
     },
-    removerCurso(index) {
+    /* removerCurso(index) {
       this.cursos.splice(index, 1);
+    }, */
+    removerCurso(index) {
+      const cursoId = this.cursos[index].id;
+      db.collection("cursos")
+        .doc(cursoId)
+        .delete()
+        .then(() => {
+          console.log("Curso removido com sucesso!");
+          this.cursos.splice(index, 1);
+        })
+        .catch((error) => {
+          console.error("Erro ao remover curso:", error);
+        });
     },
 
-    atualizarCurso() {
+    /* atualizarCurso() {
       if (this.indexAtualizarCurso !== -1) {
         this.cursos.splice(this.indexAtualizarCurso, 1, this.novoCurso);
         this.dialogAtualizarCurso = false;
       }
-    },
+    }, */
+  },
+  atualizarCurso(index) {
+    const cursoId = this.cursos[index].id;
+    db.collection("cursos")
+      .doc(cursoId)
+      .update(this.novoCurso)
+      .then(() => {
+        console.log("Curso atualizado com sucesso!");
+        this.cursos.splice(index, 1, { ...this.novoCurso, id: cursoId });
+        this.dialogAtualizarCurso = false;
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar curso:", error);
+      });
   },
 };
 </script>
